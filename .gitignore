@@ -1,3 +1,7 @@
+# Environment variables (secrets - never push!)
+.env
+.env.*
+
 HELP.md
 target/
 .mvn/wrapper/maven-wrapper.jar
