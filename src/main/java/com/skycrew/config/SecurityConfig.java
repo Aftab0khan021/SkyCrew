@@ -46,6 +46,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/v1/auth/**").permitAll()
                 .requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**").permitAll()
                 .requestMatchers("/h2-console/**").permitAll()
+                .requestMatchers("/actuator/**").permitAll()
 
                 // GET endpoints - accessible by both ADMIN and CREW
                 .requestMatchers(HttpMethod.GET, "/api/v1/**").hasAnyRole("ADMIN", "CREW")
