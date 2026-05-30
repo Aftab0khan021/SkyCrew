@@ -3,7 +3,7 @@
 -- ============================================
 
 CREATE TABLE crew_availability (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    id BIGSERIAL PRIMARY KEY,
     crew_id BIGINT NOT NULL,
     availability_type VARCHAR(30) NOT NULL,
     start_date TIMESTAMP NOT NULL,

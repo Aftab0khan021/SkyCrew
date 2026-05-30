@@ -4,7 +4,7 @@
 
 -- Application Users (for authentication)
 CREATE TABLE app_users (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    id BIGSERIAL PRIMARY KEY,
     username VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     role VARCHAR(50) NOT NULL,
@@ -15,7 +15,7 @@ CREATE TABLE app_users (
 
 -- Crew Members (Single Table Inheritance)
 CREATE TABLE crew_member (
-    crew_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    crew_id BIGSERIAL PRIMARY KEY,
     crew_type VARCHAR(31) NOT NULL,
     name VARCHAR(255) NOT NULL,
     role VARCHAR(50) NOT NULL,
@@ -35,7 +35,7 @@ CREATE TABLE crew_member (
 
 -- Flights
 CREATE TABLE flight (
-    flight_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    flight_id BIGSERIAL PRIMARY KEY,
     flight_number VARCHAR(20) NOT NULL,
     origin VARCHAR(3) NOT NULL,
     destination VARCHAR(3) NOT NULL,
@@ -51,7 +51,7 @@ CREATE TABLE flight (
 
 -- Roster (Crew-to-Flight assignments)
 CREATE TABLE roster (
-    roster_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    roster_id BIGSERIAL PRIMARY KEY,
     crew_id BIGINT NOT NULL,
     flight_id BIGINT NOT NULL,
     status VARCHAR(50) NOT NULL DEFAULT 'CONFIRMED',

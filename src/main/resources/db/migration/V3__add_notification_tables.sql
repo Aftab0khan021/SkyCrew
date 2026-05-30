@@ -4,7 +4,7 @@
 
 -- Notification log
 CREATE TABLE notification (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    id BIGSERIAL PRIMARY KEY,
     recipient_email VARCHAR(255),
     recipient_phone VARCHAR(50),
     notification_type VARCHAR(20) NOT NULL,
@@ -21,7 +21,7 @@ CREATE TABLE notification (
 
 -- User notification preferences
 CREATE TABLE notification_preference (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    id BIGSERIAL PRIMARY KEY,
     user_id BIGINT NOT NULL UNIQUE,
     email_enabled BOOLEAN DEFAULT TRUE,
     sms_enabled BOOLEAN DEFAULT FALSE,
