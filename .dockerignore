@@ -1,0 +1,15 @@
+target/
+.git/
+.github/
+.mvn/
+.idea/
+*.iml
+*.iws
+*.ipr
+*.log
+*.md
+deploy/
+docker-compose.yml
+Dockerfile
+.dockerignore
+.gitignore

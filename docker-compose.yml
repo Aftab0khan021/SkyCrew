@@ -1,0 +1,66 @@
+# ===========================================
+# SkyCrew — Docker Compose
+# ===========================================
+# Usage:
+#   docker-compose up -d          # Start all services
+#   docker-compose logs -f app    # Follow app logs
+#   docker-compose down -v        # Stop and remove volumes
+# ===========================================
+
+services:
+  # --- PostgreSQL Database ---
+  db:
+    image: postgres:16-alpine
+    container_name: skycrew-db
+    environment:
+      POSTGRES_DB: skycrew_db
+      POSTGRES_USER: skycrew
+      POSTGRES_PASSWORD: skycrew_secret
+    ports:
+      - "5432:5432"
+    volumes:
+      - skycrew_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U skycrew -d skycrew_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - skycrew-net
+
+  # --- SkyCrew Application ---
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: skycrew-app
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/skycrew_db
+      SPRING_DATASOURCE_USERNAME: skycrew
+      SPRING_DATASOURCE_PASSWORD: skycrew_secret
+      SPRING_FLYWAY_ENABLED: "true"
+      SKYCREW_JWT_SECRET: c2t5Y3Jldy1kb2NrZXItc2VjcmV0LWtleS1mb3Itand0LWF1dGhlbnRpY2F0aW9u
+      SKYCREW_JWT_EXPIRATION_MS: "86400000"
+      SKYCREW_RATE_LIMIT_REQUESTS_PER_MINUTE: "50"
+      SKYCREW_RULES_MIN_REST_HOURS: "12"
+      # Email (configure for notifications)
+      # SPRING_MAIL_HOST: smtp.gmail.com
+      # SPRING_MAIL_PORT: 587
+      # SPRING_MAIL_USERNAME: your-email@gmail.com
+      # SPRING_MAIL_PASSWORD: your-app-password
+    ports:
+      - "8080:8080"
+    networks:
+      - skycrew-net
+
+volumes:
+  skycrew_pgdata:
+    driver: local
+
+networks:
+  skycrew-net:
+    driver: bridge

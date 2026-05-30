@@ -1,0 +1,11 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /opt/skycrew
+
+hooks:
+  BeforeInstall:
+    - location: deploy/aws/deploy.sh
+      timeout: 300
+      runas: root
