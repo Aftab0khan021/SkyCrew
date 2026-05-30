@@ -28,6 +28,7 @@ CREATE TABLE notification_preference (
     phone_number VARCHAR(50),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    created_by VARCHAR(255),
     CONSTRAINT fk_notif_pref_user FOREIGN KEY (user_id) REFERENCES app_users(id)
 );
 
